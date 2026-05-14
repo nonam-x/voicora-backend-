@@ -21,6 +21,7 @@ export const createPollSchema = z.object({
     .max(20, "Poll can have at most 20 questions"),
   responseMode: z.enum(["anonymous", "authenticated"]).default("anonymous"),
   isPublic: z.boolean().default(true),
+  showResultsAfterVoting: z.boolean().default(false),
   expiresAt: z.string().datetime().optional(),
 });
 
@@ -34,6 +35,7 @@ export const updatePollSchema = z.object({
     .optional(),
   responseMode: z.enum(["anonymous", "authenticated"]).optional(),
   isPublic: z.boolean().optional(),
+  showResultsAfterVoting: z.boolean().optional(),
   expiresAt: z.string().datetime().optional(),
 });
 

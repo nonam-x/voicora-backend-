@@ -45,6 +45,7 @@ export interface IPoll extends Document {
   expiresAt?: Date;
   publishedAt?: Date;
   resultsPublished: boolean;
+  showResultsAfterVoting: boolean;
   totalResponses: number;
   createdAt: Date;
   updatedAt: Date;

@@ -93,7 +93,6 @@ const pollSchema = new Schema<IPoll>(
       type: String,
       unique: true,
       sparse: true,
-      index: true,
     },
 
     expiresAt: {
@@ -105,6 +104,11 @@ const pollSchema = new Schema<IPoll>(
     },
 
     resultsPublished: {
+      type: Boolean,
+      default: false,
+    },
+
+    showResultsAfterVoting: {
       type: Boolean,
       default: false,
     },
