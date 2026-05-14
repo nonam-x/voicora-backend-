@@ -8,7 +8,7 @@ export const submitResponse = asyncHandler(async (req: Request, res: Response) =
   const { pollId } = req.params;
   const userId = req.user?.userId;
 
-  const result = await responseService.submitResponse(pollId, userId, req.body);
+  const result = await responseService.submitResponse(pollId as string, userId, req.body);
 
   // Emit live updates via Socket.io
   const io = getIO();
@@ -20,11 +20,11 @@ export const submitResponse = asyncHandler(async (req: Request, res: Response) =
 });
 
 export const getResponses = asyncHandler(async (req: Request, res: Response) => {
-  const responses = await responseService.getResponsesByPoll(req.params.pollId);
+  const responses = await responseService.getResponsesByPoll(req.params.pollId as string);
   sendSuccess(res, responses);
 });
 
 export const getAnalytics = asyncHandler(async (req: Request, res: Response) => {
-  const analytics = await responseService.getPollAnalytics(req.params.pollId);
+  const analytics = await responseService.getPollAnalytics(req.params.pollId as string);
   sendSuccess(res, analytics);
 });

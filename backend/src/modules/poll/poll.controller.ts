@@ -14,36 +14,36 @@ export const getMyPolls = asyncHandler(async (req: Request, res: Response) => {
 });
 
 export const getPollById = asyncHandler(async (req: Request, res: Response) => {
-  const poll = await pollService.getPollById(req.params.id);
+  const poll = await pollService.getPollById(req.params.id as string);
   sendSuccess(res, poll);
 });
 
 export const getPollBySlug = asyncHandler(async (req: Request, res: Response) => {
-  const poll = await pollService.getPollBySlug(req.params.slug);
+  const poll = await pollService.getPollBySlug(req.params.slug as string);
   sendSuccess(res, poll);
 });
 
 export const updatePoll = asyncHandler(async (req: Request, res: Response) => {
-  const poll = await pollService.updatePoll(req.params.id, req.user!.userId, req.body);
+  const poll = await pollService.updatePoll(req.params.id as string, req.user!.userId, req.body);
   sendSuccess(res, poll, "Poll updated successfully");
 });
 
 export const activatePoll = asyncHandler(async (req: Request, res: Response) => {
-  const poll = await pollService.activatePoll(req.params.id, req.user!.userId);
+  const poll = await pollService.activatePoll(req.params.id as string, req.user!.userId);
   sendSuccess(res, poll, "Poll activated successfully");
 });
 
 export const closePoll = asyncHandler(async (req: Request, res: Response) => {
-  const poll = await pollService.closePoll(req.params.id, req.user!.userId);
+  const poll = await pollService.closePoll(req.params.id as string, req.user!.userId);
   sendSuccess(res, poll, "Poll closed successfully");
 });
 
 export const publishResults = asyncHandler(async (req: Request, res: Response) => {
-  const poll = await pollService.publishResults(req.params.id, req.user!.userId);
+  const poll = await pollService.publishResults(req.params.id as string, req.user!.userId);
   sendSuccess(res, poll, "Results published successfully");
 });
 
 export const deletePoll = asyncHandler(async (req: Request, res: Response) => {
-  await pollService.deletePoll(req.params.id, req.user!.userId);
+  await pollService.deletePoll(req.params.id as string, req.user!.userId);
   sendNoContent(res);
 });
