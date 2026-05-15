@@ -56,7 +56,13 @@ const responseSchema = new Schema<IResponse>(
 );
 
 // Compound index: prevent duplicate responses per user per poll
-responseSchema.index({ pollId: 1, userId: 1 }, { unique: true, sparse: true });
-responseSchema.index({ pollId: 1, anonymousId: 1 }, { unique: true, sparse: true });
+responseSchema.index(
+  { pollId: 1, userId: 1 },
+  { unique: true, partialFilterExpression: { userId: { $exists: true } } }
+);
+responseSchema.index(
+  { pollId: 1, anonymousId: 1 },
+  { unique: true, partialFilterExpression: { anonymousId: { $exists: true } } }
+);
 
 export const PollResponse = mongoose.model<IResponse>("Response", responseSchema);

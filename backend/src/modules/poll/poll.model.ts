@@ -134,7 +134,6 @@ pollSchema.virtual("isExpired").get(function () {
 
 // Indexes for performance
 pollSchema.index({ createdBy: 1, status: 1 });
-pollSchema.index({ publicSlug: 1 });
 pollSchema.index({ status: 1, expiresAt: 1 });
 
 export const Poll = mongoose.model<IPoll>("Poll", pollSchema);
