@@ -37,7 +37,34 @@ export default function PollResponse() {
   // ── Fetch poll data ──
   useEffect(() => {
     pollApi.getBySlug(slug)
-      .then((res) => setPollData(res.data.data))
+      .then((res) => {
+        const poll = res.data.data
+        setPollData(poll)
+        if (localStorage.getItem(`voted_${poll._id}`)) {
+          setSubmitted(true)
+          if (poll.showResultsAfterVoting) {
+            const totalResponses = poll.totalResponses || 0
+            const analyticsData = {
+              totalResponses,
+              questions: poll.questions.map((q) => {
+                const totalVotes = q.options.reduce((sum, o) => sum + o.votes, 0)
+                return {
+                  questionId: q._id,
+                  questionText: q.text,
+                  totalVotes,
+                  options: q.options.map((o) => ({
+                    optionId: o._id,
+                    optionText: o.text,
+                    votes: o.votes,
+                    percentage: totalVotes > 0 ? Math.round((o.votes / totalVotes) * 100) : 0,
+                  })),
+                }
+              }),
+            }
+            setLiveResults(analyticsData)
+          }
+        }
+      })
       .catch((err) => setError(getErrorMessage(err)))
       .finally(() => setLoading(false))
   }, [slug])
@@ -59,6 +86,7 @@ export default function PollResponse() {
       }
       await responseApi.submit(pollData._id, payload)
       setSubmitted(true)
+      localStorage.setItem(`voted_${pollData._id}`, 'true')
 
       // If showResultsAfterVoting, fetch analytics to show inline results
       if (pollData.showResultsAfterVoting) {

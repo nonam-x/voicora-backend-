@@ -31,6 +31,8 @@ export function joinPollRoom(pollId) {
   const s = getSocket()
   if (s.connected) {
     s.emit('poll:join', pollId)
+  } else {
+    s.once('connect', () => s.emit('poll:join', pollId))
   }
 }
 
