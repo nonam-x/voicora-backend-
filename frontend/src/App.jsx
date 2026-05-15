@@ -8,7 +8,6 @@ import PollResponse from './pages/PollResponse'
 import PollAnalytics from './pages/PollAnalytics'
 import PollResults from './pages/PollResults'
 import ProtectedRoute from './components/ProtectedRoute'
-import Admin from './pages/Admin'
 
 function App() {
   return (
@@ -18,7 +17,6 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/poll/:slug" element={<PollResponse />} />
         <Route path="/results/:id" element={<PollResults />} />
-        <Route path="/admin" element={<Admin />} />
 
         {/* App (authenticated) */}
         <Route
